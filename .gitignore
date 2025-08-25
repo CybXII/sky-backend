@@ -1,0 +1,25 @@
+# Byte-code files
+*.pyc
+__pycache__/
+
+# Virtual environment
+venv/
+.venv/
+
+# Django stuff:
+*.log
+*.pot
+*.mo
+*.js.map
+*.css.map
+
+# Python environment variables
+.env
+.flaskenv
+
+# Media files
+media/
+
+# Database
+db.sqlite3
+/data/
