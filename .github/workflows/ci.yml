@@ -76,7 +76,7 @@ jobs:
               echo "MARIADB_ROOT_PASSWORD=${{ secrets.MARIADB_ROOT_PASSWORD }}" >> ~/sky-infra/.env.dev
               echo "MARIADB_PASSWORD=${{ secrets.MARIADB_PASSWORD }}" >> ~/sky-infra/.env.dev
               
-              docker login ghcr.io -u ${{ secrets.OWNER_GITHUB }} --password-stdin <<< ${{ secrets.GITHUB_TOKEN }}
+              echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ secrets.OWNER_GITHUB }} --password-stdin
               cd ~/sky-infra
               docker compose -f compose.dev.yml --env-file .env.dev pull dev-backend
               docker compose -f compose.dev.yml --env-file .env.dev up -d dev-backend
@@ -99,7 +99,7 @@ jobs:
               echo "PROD_MARIADB_ROOT_PASSWORD=${{ secrets.PROD_MARIADB_ROOT_PASSWORD }}" >> ~/sky-infra/.env.prod
               echo "PROD_MARIADB_PASSWORD=${{ secrets.PROD_MARIADB_PASSWORD }}" >> ~/sky-infra/.env.prod
               
-              docker login ghcr.io -u ${{ secrets.OWNER_GITHUB }} --password-stdin <<< ${{ secrets.GITHUB_TOKEN }}
+              echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ secrets.OWNER_GITHUB }} --password-stdin
               cd ~/sky-infra
               docker compose -f compose.prod.yml --env-file .env.prod pull dev-backend
               docker compose -f compose.prod.yml --env-file .env.prod up -d dev-backend
