@@ -89,14 +89,14 @@ jobs:
               echo "PROD_SHOP_HOST=${{ secrets.PROD_SHOP_HOST }}" >> ~/sky-infra/.env.prod
               echo "PROD_FRONTEND_TAG=${{ secrets.PROD_FRONTEND_TAG }}" >> ~/sky-infra/.env.prod
               echo "PROD_BACKEND_TAG=${{ secrets.PROD_BACKEND_TAG }}" >> ~/sky-infra/.env.prod
-              echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY_PROD }}" >> ~/sky-infra/.env.prod
+              echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> ~/sky-infra/.env.prod
               echo "PG_USER=${{ secrets.PG_USER }}" >> ~/sky-infra/.env.prod
               echo "PG_DB=skylad_prod" >> ~/sky-infra/.env.prod
-              echo "PG_PASSWORD=${{ secrets.PG_PASSWORD_PROD }}" >> ~/sky-infra/.env.prod
-              echo "MARIADB_USER=${{ secrets.MARIADB_USER }}" >> ~/sky-infra/.env.prod
-              echo "MARIADB_DB=skylad_prod_mariadb" >> ~/sky-infra/.env.prod
-              echo "MARIADB_ROOT_PASSWORD=${{ secrets.MARIADB_ROOT_PASSWORD_PROD }}" >> ~/sky-infra/.env.prod
-              echo "MARIADB_PASSWORD=${{ secrets.MARIADB_PASSWORD_PROD }}" >> ~/sky-infra/.env.prod
+              echo "PG_PASSWORD=${{ secrets.PG_PASSWORD }}" >> ~/sky-infra/.env.prod
+              echo "PROD_MARIADB_USER=${{ secrets.PROD_MARIADB_USER }}" >> ~/sky-infra/.env.prod
+              echo "PROD_MARIADB_DATABASE=skylad_prod_mariadb" >> ~/sky-infra/.env.prod
+              echo "PROD_MARIADB_ROOT_PASSWORD=${{ secrets.PROD_MARIADB_ROOT_PASSWORD }}" >> ~/sky-infra/.env.prod
+              echo "PROD_MARIADB_PASSWORD=${{ secrets.PROD_MARIADB_PASSWORD }}" >> ~/sky-infra/.env.prod
               
               cd ~/sky-infra
               docker compose -f compose.prod.yml --env-file .env.prod pull dev-backend
