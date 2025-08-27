@@ -43,12 +43,20 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build & Push
+      - name: Build & Push (commit)
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
           tags: ${{ env.IMAGE }}:${{ env.TAG }}
+
+      - name: Build & Push (latest)
+        if: github.ref == 'refs/heads/main'
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ env.IMAGE }}:latest
 
       - name: Trigger infra (DEV) on develop
         if: github.ref == 'refs/heads/develop'
