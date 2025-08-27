@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Third-party apps
+    'rest_framework',
+    'drf_spectacular',
+    # My apps (add your Django apps here later)
 ]
 
 MIDDLEWARE = [
@@ -120,3 +124,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Sky L.A.D Backend API',
+    'DESCRIPTION': 'API for the Sky L.A.D project backend.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False, # Set to True in development if you want to serve the schema directly
+    # 'SCHEMA_PATH_PREFIX': '/api/v[0-9]', # Example for API versioning
+}
