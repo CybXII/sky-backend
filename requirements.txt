@@ -1,7 +1,7 @@
 
 Django
 djangorestframework
-djangorestframework-spectacular
+drf-spectacular
 gunicorn
 psycopg2-binary
 pytest
