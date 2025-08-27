@@ -7,6 +7,8 @@ on:
 jobs:
   test-build-push:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     env:
       IMAGE: ghcr.io/${{ secrets.OWNER_GITHUB_LOWER_CASE }}/sky-backend
       TAG: ${{ github.sha }}
