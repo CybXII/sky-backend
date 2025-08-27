@@ -50,57 +50,9 @@ jobs:
 
       - name: Trigger infra (DEV) on develop
         if: github.ref == 'refs/heads/develop'
-        uses: appleboy/ssh-action@v1.2.0
+        uses: peter-evans/repository-dispatch@v2
         with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          script: |
-            mkdir -p ~/sky-infra
-            
-            if [ "${{ github.ref_name }}" == "develop" ]; then
-              # Create .env.dev file for develop branch
-              echo "CERT_EMAIL=${{ secrets.CERT_EMAIL }}" > ~/sky-infra/.env.dev
-              echo "OWNER_GITHUB=${{ secrets.OWNER_GITHUB }}" >> ~/sky-infra/.env.dev
-              echo "DEV_APP_HOST=${{ secrets.DEV_APP_HOST }}" >> ~/sky-infra/.env.dev
-              echo "DEV_API_HOST=${{ secrets.DEV_API_HOST }}" >> ~/sky-infra/.env.dev
-              echo "DEV_SHOP_HOST=${{ secrets.DEV_SHOP_HOST }}" >> ~/sky-infra/.env.dev
-              echo "DEV_FRONTEND_TAG=${{ secrets.DEV_FRONTEND_TAG }}" >> ~/sky-infra/.env.dev
-              echo "DEV_BACKEND_TAG=${{ env.TAG }}" >> ~/sky-infra/.env.dev # Backend-Tag kommt aus env.TAG des Workflows
-              echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> ~/sky-infra/.env.dev
-              echo "PG_USER=${{ secrets.PG_USER }}" >> ~/sky-infra/.env.dev
-              echo "PG_DB=skylad_dev" >> ~/sky-infra/.env.dev
-              echo "PG_PASSWORD=${{ secrets.PG_PASSWORD }}" >> ~/sky-infra/.env.dev
-              echo "MARIADB_USER=${{ secrets.MARIADB_USER }}" >> ~/sky-infra/.env.dev
-              echo "MARIADB_DB=skylad_dev_mariadb" >> ~/sky-infra/.env.dev
-              echo "MARIADB_ROOT_PASSWORD=${{ secrets.MARIADB_ROOT_PASSWORD }}" >> ~/sky-infra/.env.dev
-              echo "MARIADB_PASSWORD=${{ secrets.MARIADB_PASSWORD }}" >> ~/sky-infra/.env.dev
-              
-              echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ secrets.OWNER_GITHUB }} --password-stdin
-              cd ~/sky-infra
-              docker compose -f compose.dev.yml --env-file .env.dev pull dev-backend
-              docker compose -f compose.dev.yml --env-file .env.dev up -d dev-backend
-            
-            elif [ "${{ github.ref_name }}" == "main" ]; then
-              # Create .env.prod file for main branch
-              echo "CERT_EMAIL=${{ secrets.CERT_EMAIL }}" > ~/sky-infra/.env.prod
-              echo "OWNER_GITHUB=${{ secrets.OWNER_GITHUB }}" >> ~/sky-infra/.env.prod
-              echo "PROD_APP_HOST=${{ secrets.PROD_APP_HOST }}" >> ~/sky-infra/.env.prod
-              echo "PROD_API_HOST=${{ secrets.PROD_API_HOST }}" >> ~/sky-infra/.env.prod
-              echo "PROD_SHOP_HOST=${{ secrets.PROD_SHOP_HOST }}" >> ~/sky-infra/.env.prod
-              echo "PROD_FRONTEND_TAG=${{ secrets.PROD_FRONTEND_TAG }}" >> ~/sky-infra/.env.prod
-              echo "PROD_BACKEND_TAG=${{ secrets.PROD_BACKEND_TAG }}" >> ~/sky-infra/.env.prod
-              echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> ~/sky-infra/.env.prod
-              echo "PG_USER=${{ secrets.PG_USER }}" >> ~/sky-infra/.env.prod
-              echo "PG_DB=skylad_prod" >> ~/sky-infra/.env.prod
-              echo "PG_PASSWORD=${{ secrets.PG_PASSWORD }}" >> ~/sky-infra/.env.prod
-              echo "PROD_MARIADB_USER=${{ secrets.PROD_MARIADB_USER }}" >> ~/sky-infra/.env.prod
-              echo "PROD_MARIADB_DATABASE=skylad_prod_mariadb" >> ~/sky-infra/.env.prod
-              echo "PROD_MARIADB_ROOT_PASSWORD=${{ secrets.PROD_MARIADB_ROOT_PASSWORD }}" >> ~/sky-infra/.env.prod
-              echo "PROD_MARIADB_PASSWORD=${{ secrets.PROD_MARIADB_PASSWORD }}" >> ~/sky-infra/.env.prod
-              
-              echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ secrets.OWNER_GITHUB }} --password-stdin
-              cd ~/sky-infra
-              docker compose -f compose.prod.yml --env-file .env.prod pull dev-backend
-              docker compose -f compose.prod.yml --env-file .env.prod up -d dev-backend
-            fi
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+          repository: ${{ github.repository_owner }}/sky-infra # Passe dies an dein infra repo an!
+          event-type: backend-image-updated
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "image_tag": "${{ env.TAG }}", "environment": "development"}'
