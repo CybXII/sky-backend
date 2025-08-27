@@ -56,7 +56,24 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
+            mkdir -p ~/sky-infra
+            # Create .env.dev file
+            echo "CERT_EMAIL=${{ secrets.CERT_EMAIL }}" > ~/sky-infra/.env.dev
+            echo "OWNER_GITHUB=${{ secrets.OWNER_GITHUB }}" >> ~/sky-infra/.env.dev
+            echo "DEV_APP_HOST=${{ secrets.DEV_APP_HOST }}" >> ~/sky-infra/.env.dev
+            echo "DEV_API_HOST=${{ secrets.DEV_API_HOST }}" >> ~/sky-infra/.env.dev
+            echo "DEV_SHOP_HOST=${{ secrets.DEV_SHOP_HOST }}" >> ~/sky-infra/.env.dev
+            echo "DEV_FRONTEND_TAG=${{ secrets.DEV_FRONTEND_TAG }}" >> ~/sky-infra/.env.dev
+            echo "DEV_BACKEND_TAG=${{ env.TAG }}" >> ~/sky-infra/.env.dev
+            echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY_DEV }}" >> ~/sky-infra/.env.dev
+            echo "PG_USER=${{ secrets.PG_USER }}" >> ~/sky-infra/.env.dev
+            echo "PG_DB=skylad_dev" >> ~/sky-infra/.env.dev
+            echo "PG_PASSWORD=${{ secrets.PG_PASSWORD_DEV }}" >> ~/sky-infra/.env.dev
+            echo "MARIADB_USER=${{ secrets.MARIADB_USER }}" >> ~/sky-infra/.env.dev
+            echo "MARIADB_DB=skylad_dev_mariadb" >> ~/sky-infra/.env.dev
+            echo "MARIADB_ROOT_PASSWORD=${{ secrets.MARIADB_ROOT_PASSWORD_DEV }}" >> ~/sky-infra/.env.dev
+            echo "MARIADB_PASSWORD=${{ secrets.MARIADB_PASSWORD_DEV }}" >> ~/sky-infra/.env.dev
+            
             cd ~/sky-infra
-            export DEV_BACKEND_TAG=${{ env.TAG }}
             docker compose -f compose.dev.yml --env-file .env.dev pull dev-backend
             docker compose -f compose.dev.yml --env-file .env.dev up -d dev-backend
