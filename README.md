@@ -2,6 +2,8 @@
 
 Dies ist das Backend-Repository für das Sky L.A.D Projekt, entwickelt mit Django und Django REST Framework.
 
+Für eine **allgemeine Projektübersicht, Architektur, CI/CD-Strategie und wichtige GitHub Secrets**, siehe die [Haupt-README.md](../README.md).
+
 ## Projektübersicht
 
 Dieses Repository stellt die RESTful API für das Frontend und andere Verbraucher bereit. Es verwaltet die Geschäftslogik, Datenpersistenz (PostgreSQL) und Authentifizierung.
@@ -14,7 +16,7 @@ Dieses Repository stellt die RESTful API für das Frontend und andere Verbrauche
 *   **Webserver:** Gunicorn
 *   **Paketmanager:** pip
 
-## Entwicklung
+## Lokale Entwicklung
 
 ### Installation
 
@@ -30,7 +32,7 @@ pip install -r requirements.txt
 python manage.py migrate
 ```
 
-### Lokale Entwicklung
+### Starten des Entwicklungsservers
 
 ```bash
 # Startet den Django-Entwicklungsserver
@@ -48,9 +50,4 @@ Die API ist dann unter `http://localhost:8000/` erreichbar.
 
 ## CI/CD
 
-Siehe [`sky-backend/.github/workflows/ci.yml`](.github/workflows/ci.yml) für Details zum Build-, Test- und Deployment-Workflow.
-
-## Verwandte Repositories
-
-*   [sky-frontend](https://github.com/yourgithub/sky-frontend) (Bitte URL anpassen)
-*   [sky-infra](https://github.com/yourgithub/sky-infra) (Bitte URL anpassen)
+Details zum Build-, Test- und Deployment-Workflow finden Sie in der [Haupt-README.md](../README.md) und [`sky-backend/.github/workflows/ci.yml`](.github/workflows/ci.yml).
