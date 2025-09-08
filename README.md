@@ -1,8 +1,6 @@
 # Sky Backend (Django / DRF)
 
-Dies ist das Backend-Repository für das Sky L.A.D Projekt, entwickelt mit Django und Django REST Framework.
-
-Für eine **allgemeine Projektübersicht, Architektur, CI/CD-Strategie und wichtige GitHub Secrets**, siehe die [Haupt-README.md](../README.md).
+Dies ist das Backend-Repository für das Sky L.A.D Projekt, soll als Grundgerüst für zukünftige Django und Django REST Framework Applikations dienen..
 
 ## Projektübersicht
 
@@ -50,4 +48,4 @@ Die API ist dann unter `http://localhost:8000/` erreichbar.
 
 ## CI/CD
 
-Details zum Build-, Test- und Deployment-Workflow finden Sie in der [Haupt-README.md](../README.md) und [`sky-backend/.github/workflows/ci.yml`](.github/workflows/ci.yml).
+Details zum Build-, Test- und Deployment-Workflow finden Sie in der [`sky-backend/.github/workflows/ci.yml`](.github/workflows/ci.yml).

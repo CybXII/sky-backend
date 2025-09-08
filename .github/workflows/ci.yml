@@ -63,6 +63,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
-          repository: ${{ github.repository_owner }}/sky-infra # Passe dies an dein infra repo an!
+          repository: ${{ github.repository_owner }}/sky-infra # Passe dies an dein repo an!
           event-type: backend-image-updated
           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "image_tag": "${{ env.TAG }}", "environment": "development"}'
